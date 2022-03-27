@@ -1,0 +1,71 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Startup Registration{% endblock title %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{% block main-content %}
+
+<style>
+  .card {
+    background-color: #014E88;
+    color: white;
+  }
+
+  #btn {
+    border: 2px solid white;
+    background-color: #014E88;
+    color: white;
+  }
+
+  #btn:hover {
+    background-color: white;
+    color: #014E88;
+  }
+</style>
+
+<section>
+  <div class="container my-4" style="padding-top: 100px;">
+    <div class="row">
+      <div class="col-md-8 mx-auto">
+        <div class="card shadow p-3">
+          <div class="card-header text-black">
+            <h2>Student Registration</h2>
+          </div>
+          <div class="card-body">
+            <form action="{% url 'student_signup' %}" method="POST" novalidate>
+              {% if messages %}
+              {% for message in messages %}
+              <p {% if message.tags %} class="alert alert-{{message.tags}}
+            mb-5 {% endif %}">{{message}}</p>
+              {% endfor %}
+              {% endif %}
+              {% csrf_token %}
+              {% for field in form.visible_fields %}
+              <div class="form-group mt-3">
+                {{ field.label_tag }}
+                {% render_field field class="form-control" %}
+                {% for error in field.errors %}
+                <span style="color:red">{{ error }}</span>
+                {% endfor %}
+                {% endfor %}
+                <br>
+                <div class="text-end">
+                  <input type="submit" value="Register" class="btn" id="btn">
+                </div>
+                <br>
+
+                <div class="text-center text-primary fw-bold">
+                  <small style="color: white;"> Existing User? <a href="{% url 'login' %}" class="text-danger"
+                      style="text-decoration:none">Login Now</a></small>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+{% endblock main-content %}

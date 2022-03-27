@@ -1,0 +1,36 @@
+{% extends 'app/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Create Article{% endblock title %}
+
+{% block main-content %}
+
+<style>
+  button {
+    background-color: #014e88 !important;
+    color: white !important;
+    transition: .4s ease !important;
+  }
+
+  button:hover {
+    background-color: #00335a !important;
+  }
+</style>
+
+
+<div class="container my-5" style="padding-top: 50px;">
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <h2 class="my-3">Edit Article</h2>
+        <form action="" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form | crispy }}
+          <br>
+          <button class="btn" type="submit">Update</button>
+        </form>
+    </div>
+    <div class="col-md-2"></div>
+  </div>
+</div>
+
+{% endblock main-content %}

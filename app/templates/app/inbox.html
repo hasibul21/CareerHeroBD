@@ -1,0 +1,64 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}inbox{% endblock title %}
+
+{% block main-content %}
+
+
+<style>
+  a #button {
+    background-color: #014E88;
+    color: white;
+    transition: .6s ease;
+  }
+
+  a #button:hover {
+    background-color: white;
+    color: #014E88;
+    border: 2px solid #014E88;
+  }
+</style>
+
+<div class="container my-5" style="padding-top: 60px;">
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8 d-flex align-items-center justify-content-center">
+      <div>
+        <a href="{% url 'create-thread' %}"> <button style="width: 300px;" id="button" class="btn p-3 m-3" type="submit">Start new
+            Conversation</button></a>
+      </div>
+    </div>
+    <div class="col-md-2"></div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="card shadow col-md-8 p-5" style="background-color:#2F3D50;">
+      {% if threads %}
+      <center>
+        <h3 style="color: white;">Inbox</h3> <br>
+      </center>
+      {% else %}
+      <center>
+        <h3 style="color: white;">Inbox Empty</h3>
+      </center>
+      {% endif %}
+      {% for thread in threads.all %}
+
+      <div class="card p-3 shadow-sm my-2">
+        <h5>{{ thread.user }} - {{ thread.receiver }}</h5>
+        <a class="stretched-link" href="{% url 'thread' thread.pk %}"></a>
+      </div>
+
+      {% endfor %}
+    </div>
+    <div class="col-md-2"></div>
+  </div>
+</div>
+
+</div>
+
+
+{% endblock main-content %}

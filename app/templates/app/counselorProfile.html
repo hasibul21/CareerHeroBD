@@ -1,0 +1,196 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Counselor Profile{% endblock title %}
+
+{% block main-content %}
+
+
+<div class="container my-5" style="padding-top: 50px;">
+  <div class="row ">
+
+    <div class="col-md-6">
+
+      <div class="card align-items-center" style="border: none;">
+        {% if counselor.image %}
+        <img src="{{ counselor.image.url }}" alt="" width="50%" height="300px">
+        {% else %}
+        <img src="{% static 'app/images/img/profile1.jpg' %}" alt="" width="50%" height="300px">
+        {% endif %}
+        <div class="card-body text-center">
+          <h5 class="card-title text-center">{{counselor.name}}</h5>
+          <div class="card-text text-center">
+            <b>{{counselor.designation}}, {{counselor.institute}}</b>
+
+          </div>
+          <br>
+          {% if counselor.user.pk == request.user.pk %}
+          <a href="{% url 'counselor_form' counselor.id %}" role="button" class="btn styled_btn">Edit Profile</a>
+          <a href="{% url 'article_new'  %}" role="button" class="btn styled_btn">Write Article</a>
+          {% elif request.user.is_student %}
+
+          <a href="{% url 'appoinmentForm' counselor.id  %}" role="button" class="btn styled_btn text-center">Request an
+            Appointment</a>
+          <a href="{% url 'create-thread'  %}" role="button" class="btn styled_btn text-center">Message</a>
+          
+          {% elif request.user.is_counselor %}
+          <div></div>
+          {% elif not request.user.is_authenticated %}
+          <a href="{% url 'login'   %}" role="button" class="btn btn-outline-danger text-center">Login or Signup for Appointment</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h6>Counsellor Information</h6>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> Username:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ counselor.user.username }}</b></p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> Email:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ counselor.email }}</b></p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> Mobile:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ counselor.mobile }}</b></p>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> Designation:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ counselor.designation }}</b></p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> Institute:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ counselor.institute }}</b></p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> Category:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ counselor.category }}</b></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> Address:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ counselor.address }}</b></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> Per Session Fee:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ counselor.per_session_fee }} Taka</b></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> Counselling Days:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ counselor.counselling_day }} </b></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b>Counselling Time:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ counselor.counselling_time }}</b></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> Counselling Experience:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ counselor.counselling_experience }} Years</b></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> Description:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ counselor.description }}</b></p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if counselor.user.pk == request.user.pk %}
+<div class="container my-5">
+  <center>
+    <h2>My Articles</h1>
+  </center>
+  <hr>
+  <div class="row">
+    {% for article in articles %}
+    <div class="col-md-4 my-3 ">
+      <div class="card h-100">
+        {% if article.image %}
+        <img src="{{ article.image.url }}" width="100%" height="300px" alt="">
+        {% else %}
+        <div></div>
+        {% endif %}
+        <div class="card-body">
+          <h3 class="card-title">{{ article.title }} </h3>
+          <span class="text-muted">Date & Time: {{ article.date }}</span></h5>
+          <br><br>
+          <p class="card-text">
+            {{ article.body | truncatewords:50 }} <a style="text-decoration: none;" class="styled_btn" href="{% url 'article_detail' article.id %}">Read More...</a>
+          </p>
+
+        </div>
+        <div class="card-footer">
+          <a href="{% url 'article_edit' article.id %}" role="button" class="btn styled_btn">Edit</a>
+          <a href="{% url 'article_delete' article.id %}" role="button" class="btn btn-danger">Delete</a>
+        </div>
+
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endif %}
+
+{% endblock main-content %}

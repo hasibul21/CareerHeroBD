@@ -1,0 +1,57 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}Create Article{% endblock title %}
+
+{% block main-content %}
+
+<style>
+  #all-articles a {
+    background-color: #014e88;
+    color: white;
+    padding: 20px;
+    margin: auto;
+    transition: .4s ease;
+  }
+
+  #all-articles a:hover {
+    background-color: #00335a !important;
+  }
+</style>
+
+<div class="container my-5" style="padding-top: 50px;">
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+      <div class="article-entry">
+        <h2>{{ object.title }}</h2>
+        <p>by {{ object.author.name }} | {{ object.date }}</p>
+        {% if object.image %}
+        <img src="{{ object.image.url }}" width="100%" height="auto" alt="">
+        {% else %}
+        <div></div>
+        {% endif %}
+        <br><br>
+
+        <p>{{ object.body }}</p>
+      </div>
+
+      {% if object.author.user.id == request.user.id %}
+
+
+      <p>
+        <a href="{% url 'article_edit' article.pk %}" role="button" class="btn styled_btn">Edit</a>
+        <a href="{% url 'article_delete' article.pk %}" role="button" class="btn btn-danger">Delete</a>
+      </p>
+
+      {% endif %}
+
+      <div class="mt-5" id="all-articles">
+        <a style="text-decoration: none; color: white;" href="{% url 'article_list' %}">Back to all Articles</a>
+      </div>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+</div>
+
+{% endblock main-content %}

@@ -1,0 +1,54 @@
+{% extends 'app/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Create_thread{% endblock title %}
+
+{% block main-content %}
+<style>
+  #continue button {
+    background-color: #014e88;
+    color: white;
+    transition: .4s ease;
+  }
+
+  #continue button:hover {
+    background-color: #00335a !important;
+  }
+
+  #btn {
+    border: #014e88 solid 1px;
+    transition: .4s ease;
+  }
+
+  #btn:hover {
+    background-color: #014e88;
+    color: white;
+  }
+</style>
+<div class="container my-5" style="padding: 60px;">
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8 p-5">
+      <h3>Start a Conversation!</h3>
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-danger">
+        {{ message }}
+      </div>
+      {% endfor %}
+      {% endif %}
+      <form method="POST">
+        {% csrf_token %}
+        <p>Enter the username of the person you would like talk to.</p>
+        {{ form | crispy }}
+        <div id="continue" class="d-grid gap-2">
+          <button class="btn mt-3" type="submit">Continue</button>
+        </div>
+      </form> <br>
+      <a href="{% url 'inbox' %}" class="btn" id="btn">Back to Inbox</a>
+    </div>
+    <div class="col-md-2"></div>
+  </div>
+</div>
+
+{% endblock main-content %}

@@ -1,0 +1,109 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}student Profile{% endblock title %}
+
+{% block main-content %}
+
+<div class="container my-5" style="padding-top: 50px;">
+  <div class="row">
+
+    <div class="col-md-6">
+
+      <div class="card align-items-center " style="border: none;">
+        {% if student.image %}
+        <img src="{{ student.image.url }}" alt="" width="50%" height="300px">
+        {% else %}
+        <img src="{% static 'app/images/img/profile1.jpg' %}" alt="" width="50%" height="300px">
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">{{student.name}}</h5>
+          <br>
+          {% if student.user.pk == request.user.id %}
+          <a href="{% url 'student_form' student.id %}" role="button" class="btn btn-primary">Edit Profile</a>
+          {% endif %}
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h6>Student Information</h6>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> username:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ student.user.username }}</b></p>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> Email:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ student.email }}</b></p>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> Mobile:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ student.mobile }}</b></p>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> Class:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ student.cls}}</b></p>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> Institute:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ student.institute }}</b></p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> Address:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ student.address }}</b></p>
+            </div>
+          </div>
+        
+          <div class="row">
+            <div class="col-4 text-muted">
+              <p><b> Area of Interest:</b></p>
+            </div>
+            <div class="col-6">
+              <p><b> {{ student.area_of_interest }}</b></p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock main-content %}

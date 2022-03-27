@@ -1,0 +1,63 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}Search Result{% endblock title %}
+
+{% block main-content %}
+
+<div class="container my-5" style="padding-top: 50px;">
+ 
+  {% if q %}
+ <div><h4 class="text-center">You search for "{{q}}"</h4></div>
+  {% endif %}
+   
+
+  <div class="row">
+    {% if counselor_data and q %}
+    <p class="text-muted">showing {{total_counsellor}} results</p>
+    {% for counselor in counselor_data %}
+
+    <div class="col-md-3 my-3">
+      <div class=" card h-100">
+        {% if counselor.image %}
+        <img src="{{ counselor.image.url }}" class="card-img-top" style="width: 100%; height: 40vh;" alt="No images">
+        {% else %}
+        <img src="{% static 'app/images/img/profile1.jpg' %}" alt="">
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">{{counselor.name}}</h5>
+          <p><b>{{counselor.designation}}, {{counselor.institute}}</b></p>
+    
+          <br>
+          {% if counselor.user.pk == request.user.pk %}
+    
+          <div class="card-footer" style="background-color: #014e88; color: white;">
+            <center>
+              <h3>My Profile</h3>
+            </center>
+          </div>
+          {% else %}
+          <a href="{% url 'counselor_profile' counselor.pk %}" class="btn styled_btn">See Profile</a>
+          {% endif %}
+        </div>
+      </div>
+    
+    </div>
+
+    {% endfor %}
+    
+    {% else %}
+    <br>
+    <div>
+      
+        <h4 class="text-center" style="color: red;">Nothing Found!!!</h4>
+      
+    </div>
+    {% endif %}
+    
+  </div>
+</div>
+
+
+
+    {% endblock main-content %}
