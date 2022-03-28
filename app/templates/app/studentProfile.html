@@ -16,11 +16,11 @@
         {% else %}
         <img src="{% static 'app/images/img/profile1.jpg' %}" alt="" width="50%" height="300px">
         {% endif %}
-        <div class="card-body">
-          <h5 class="card-title">{{student.name}}</h5>
+        <div class="card-body text-center">
+          <h5 class="card-title text-center">{{student.name}}</h5>
           <br>
           {% if student.user.pk == request.user.id %}
-          <a href="{% url 'student_form' student.id %}" role="button" class="btn btn-primary">Edit Profile</a>
+          <a href="{% url 'student_form' student.id %}" role="button" class="btn styled_btn">Edit Profile</a>
           {% endif %}
 
         </div>
