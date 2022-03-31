@@ -170,7 +170,7 @@ def appointment_form(request,pk):
       current_site=get_current_site(request)
       template=render_to_string('app/account.html',{'domain':current_site.domain})
       email=EmailMessage(
-        'Appointment Request',
+        'Appointment Request from CareerHeroBD',
         template,
         settings.EMAIL_HOST_USER,
         [form.instance.accept_user.email],
